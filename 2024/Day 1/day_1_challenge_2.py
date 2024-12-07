@@ -37,3 +37,12 @@ for item in list_a:
 
 
 #######################################################
+
+## Calculating the final score
+
+final_score = 0
+
+for i in score:
+    final_score += int(i)
+
+print(final_score)
