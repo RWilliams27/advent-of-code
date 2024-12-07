@@ -1,4 +1,4 @@
-from day_1_challenge_1_input_data import input_data
+from day_1_input_data import input_data
 
 ## Challenge URL: https://adventofcode.com/2024/day/1
 
