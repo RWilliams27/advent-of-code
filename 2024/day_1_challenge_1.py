@@ -46,3 +46,12 @@ while i < len(list_a):
     i += 1
 
 #######################################################
+
+## Calulating the final distance sum
+
+final_distance = 0
+
+for distance in distance_list:
+    final_distance += distance
+
+print(f"Final distance is: {final_distance}")
