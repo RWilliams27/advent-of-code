@@ -19,10 +19,10 @@ for item in input_list:
     i += 1
 
     if (i % 2) != 0:
-        list_a.append(item)
+        list_a.append(int(item))
         print(f"Number: {item} was added to List A")
     else:
-        list_b.append(item)
+        list_b.append(int(item))
         print(f"Number: {item} was added to List B")
 
 #######################################################
@@ -33,6 +33,9 @@ score = []
 for item in list_a:
     item_score = list_b.count(item)
     if item_score != 0:
+        print(f"Item: {item}")
+        print(f"Item Score: {item_score}")
+        print(f"Calculated Score: {item * item_score}")
         score.append(item * item_score)
 
 
@@ -43,6 +46,6 @@ for item in list_a:
 final_score = 0
 
 for i in score:
-    final_score += int(i)
+    final_score += i
 
 print(final_score)
