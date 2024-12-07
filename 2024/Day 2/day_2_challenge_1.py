@@ -96,3 +96,7 @@ for report in levels:
 #######################################################
 
 ## Final Count 
+
+valid_level_count = len(valid_levels)
+
+print(valid_level_count)
