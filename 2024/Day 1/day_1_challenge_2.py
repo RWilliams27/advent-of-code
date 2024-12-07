@@ -33,9 +33,6 @@ score = []
 for item in list_a:
     item_score = list_b.count(item)
     if item_score != 0:
-        print(f"Item: {item}")
-        print(f"Item Score: {item_score}")
-        print(f"Calculated Score: {item * item_score}")
         score.append(item * item_score)
 
 
