@@ -2,6 +2,8 @@ from day_1_input_data import input_data
 
 ## Challenge URL: https://adventofcode.com/2024/day/1
 
+#######################################################
+
 ## Turning the input data into the two required lists
 
 data = input_data.input
