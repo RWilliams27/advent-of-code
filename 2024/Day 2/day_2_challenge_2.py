@@ -45,17 +45,14 @@ for report in reports:
 valid_levels = []
 
 for report in levels:
-    logging.debug(report)
     previous_level = None
     checked = 0
-    rules_broken = 0
+    rule_broken = False
     level_was_the_same = None
     valid_level_list = []
     for level in report:
-        logging.debug(level)
         # Ensures that the level is skipped if the rule was broken 
-        if rules_broken >= 3:
-            logging.debug("HIT RULES BROKEN")
+        if rule_broken:
             break
         # Skips the first number in each report as we dont need to check it
         if previous_level == None and checked == 0:
@@ -65,9 +62,7 @@ for report in levels:
 
         # It can stop checking here for this level if the level and previous level are the same
         if previous_level == level:
-            logging.debug("DETECTED")
-            rules_broken += 1
-            logging.debug(f"Rules Broken: {rules_broken}")
+            rule_broken = True
             break
 
         # This figures out whether the report should be checking for ascending or descending numbers
@@ -84,19 +79,19 @@ for report in levels:
         # This performs the log to make sure that the numbers are within the acceptable parameters
         if up_or_down:
             if level < previous_level:
-                rules_broken += 1
+                rule_broken = True
                 break
             elif level - previous_level > 3:
-                rules_broken += 1
+                rule_broken = True
                 break
             else:
                 valid_level_list.append(level)
         else:
             if level > previous_level:
-                rules_broken += 1
+                rule_broken = True
                 break
             elif previous_level - level > 3:
-                rules_broken += 1
+                rule_broken = True
                 break
             else:
                 valid_level_list.append(level)
@@ -104,8 +99,7 @@ for report in levels:
         previous_level = level       
 
     # Adds the list to the list for valid reports
-    logging.debug(f"Rules Broken: {rules_broken}")
-    if valid_level_list != [] and rules_broken <= 2:
+    if valid_level_list != [] and rule_broken == False:
         valid_levels.append(valid_level_list)
 #######################################################
 
@@ -113,4 +107,4 @@ for report in levels:
 
 valid_level_count = len(valid_levels)
 
-logging.debug(valid_level_count)
+print(valid_level_count)
