@@ -45,16 +45,19 @@ for report in reports:
 valid_levels = []
 not_valid_levels = []
 
-def level_check(report):
+def level_check(report):    
     previous_level = None
     checked = 0
     rule_broken = False
-    level_was_the_same = None
     valid_level_list = []
+
+
+
     for level in report:
         # Ensures that the level is skipped if the rule was broken 
         if rule_broken:
             break
+
         # Skips the first number in each report as we dont need to check it
         if previous_level == None and checked == 0:
             checked += 1
@@ -105,8 +108,80 @@ def level_check(report):
     elif rule_broken: 
         not_valid_levels.append(report)
 
+def level_check_new_attempt(report):    
+    previous_level = None
+    checked = 0
+    rule_broken = 0
+    valid_level_list = []
+
+    
+
+    for level in report:
+        # Ensures that the level is skipped if the rule was broken 
+        if rule_broken >= 2:
+            break
+
+        # Skips the first number in each report as we dont need to check it
+        if previous_level == None and checked == 0:
+            checked += 1
+            previous_level = level
+            continue
+
+        # It can stop checking here for this level if the level and previous level are the same
+        if previous_level == level:
+            rule_broken += 1 
+            logging.debug(f"Rule was broken due to matching figures: {rule_broken}")
+            continue
+
+        # This figures out whether the report should be checking for ascending or descending numbers
+        if checked == 1:
+            if previous_level == level:
+                rule_broken += 1
+                logging.debug(f"Rule was broken due to matching figures: {rule_broken}")
+                continue
+            else:
+                checked += 1
+                if previous_level < level:
+                    up_or_down = True 
+                elif previous_level > level:
+                    up_or_down = False
+
+        # This performs the logic to make sure that the numbers are within the acceptable parameters
+        if up_or_down:
+            if level < previous_level:
+                rule_broken += 1
+                logging.debug(f"Rule was broken due to it going the wrong direction: {rule_broken}")
+                continue
+            elif level - previous_level > 3:
+                rule_broken += 1
+                logging.debug(f"Rule was broken due to it going the the gap being too big: {rule_broken}")
+                continue
+            else:
+                valid_level_list.append(level)
+        else:
+            if level > previous_level:
+                rule_broken += 1
+                logging.debug(f"Rule was broken due to it going the wrong direction: {rule_broken}")
+                continue
+            elif previous_level - level > 3:
+                rule_broken += 1
+                logging.debug(f"Rule was broken due to it going the gap being too big: {rule_broken}")
+                continue
+            else:
+                valid_level_list.append(level)
+
+        previous_level = level       
+
+    # Adds the list to the list for valid reports
+    if valid_level_list != [] and rule_broken <= 2:
+        valid_levels.append(valid_level_list)
+    elif rule_broken: 
+        not_valid_levels.append(report)
+
+
+
 for report in levels:
-    level_check(report)
+    level_check_new_attempt(report)
 
 #######################################################
 
