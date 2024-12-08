@@ -43,8 +43,9 @@ for report in reports:
 
 ## Performing the actual logic for the puzzle
 valid_levels = []
+not_valid_levels = []
 
-for report in levels:
+def level_check(report):
     previous_level = None
     checked = 0
     rule_broken = False
@@ -76,7 +77,7 @@ for report in levels:
                 elif previous_level > level:
                     up_or_down = False
 
-        # This performs the log to make sure that the numbers are within the acceptable parameters
+        # This performs the logic to make sure that the numbers are within the acceptable parameters
         if up_or_down:
             if level < previous_level:
                 rule_broken = True
@@ -101,10 +102,17 @@ for report in levels:
     # Adds the list to the list for valid reports
     if valid_level_list != [] and rule_broken == False:
         valid_levels.append(valid_level_list)
+    elif rule_broken: 
+        not_valid_levels.append(report)
+
+for report in levels:
+    level_check(report)
+
 #######################################################
 
 ## Final Count 
 
 valid_level_count = len(valid_levels)
 
-print(valid_level_count)
+logging.debug(f"Final valid_levels count: {valid_level_count}")
+logging.debug(f"Final not_valid_levels count: {len(not_valid_levels)}")
