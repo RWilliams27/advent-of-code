@@ -20,9 +20,6 @@ new_list =[]
 
 for i in dont_split:
     y = i.split("do()")
-    reader(y)
-    print(f"Length: {len(y)}")
-    print("----sajdnbasjnd-=djabdijabnsida-----")
 
 
     timer = 0
@@ -35,9 +32,6 @@ for i in dont_split:
             new_list.append(y[timer])
 
             timer += 1
-
-print("FINAL COUNT STUFF")
-reader(new_list)
 
 add_list = []
 def mult(mul):
@@ -65,11 +59,9 @@ data_mult_list = []
 first_mult_list = re.findall(r"mul\(\d+,\s*\d+\)", first_split[0])
 
 for item in mult_list:
-    print(item)
     for i in item:
         data_mult_list.append(i)
 
-print(first_mult_list)
 
 for i in first_mult_list:
     data_mult_list.append(i)
@@ -82,7 +74,5 @@ final_count = 0
 
 for count in add_list:
     final_count += count
-
-
 
 print(final_count)
