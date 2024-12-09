@@ -2,6 +2,10 @@
 import re
 from day_3_input_data import input_data
 
+## Challenge URL: https://adventofcode.com/2024/day/3#part2
+
+#######################################################
+
 def reader(input):
     for i in input:
         print("------------------------------------------------")
