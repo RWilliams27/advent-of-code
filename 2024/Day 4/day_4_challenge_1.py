@@ -93,12 +93,12 @@ for row in grid:
 
                             if row_index + 3 < len(grid):
                                if grid[row_index + 3][column_index] == "S":
-                                   print("----------------------")
-                                   print(row)
-                                   print(grid[row_index + 1])
-                                   print(grid[row_index + 2])
-                                   print(grid[row_index + 3])
-                                   print("----------------------")
+                                   #print("----------------------")
+                                   #print(row)
+                                   #print(grid[row_index + 1])
+                                   #print(grid[row_index + 2])
+                                   #print(grid[row_index + 3])
+                                   #print("----------------------")
                                    downwards_count += 1
 
         column_index += 1
@@ -129,12 +129,12 @@ for row in grid:
 
                             if row_index + 3 < len(grid):
                                if grid[row_index + 3][column_index] == "X":
-                                   print("----------------------")
-                                   print(row)
-                                   print(grid[row_index + 1])
-                                   print(grid[row_index + 2])
-                                   print(grid[row_index + 3])
-                                   print("----------------------")
+                                   #print("----------------------")
+                                   #print(row)
+                                   #print(grid[row_index + 1])
+                                   #print(grid[row_index + 2])
+                                   #print(grid[row_index + 3])
+                                   #print("----------------------")
                                    upwards_count += 1
         column_index += 1
 
@@ -167,12 +167,12 @@ for row in grid:
 
                             if row_index + 3 < len(grid) and column_index + 3 < len(row):
                                if grid[row_index + 3][column_index + 3] == "S":
-                                   print("----------------------")
-                                   print(row)
-                                   print(grid[row_index + 1])
-                                   print(grid[row_index + 2])
-                                   print(grid[row_index + 3])
-                                   print("----------------------")
+                                   #print("----------------------")
+                                   #print(row)
+                                   #print(grid[row_index + 1])
+                                   #print(grid[row_index + 2])
+                                   #print(grid[row_index + 3])
+                                   #print("----------------------")
                                    diagonal_count += 1
                                    debug_1 += 1
 
@@ -205,12 +205,12 @@ for row in grid:
 
                             if row_index + 3 < len(grid) and column_index + 3 < len(row):
                                if grid[row_index + 3][column_index + 3] == "X":
-                                   print("----------------------")
-                                   print(row)
-                                   print(grid[row_index + 1])
-                                   print(grid[row_index + 2])
-                                   print(grid[row_index + 3])
-                                   print("----------------------")
+                                   #print("----------------------")
+                                   #print(row)
+                                   #print(grid[row_index + 1])
+                                   #print(grid[row_index + 2])
+                                   #print(grid[row_index + 3])
+                                   #print("----------------------")
                                    diagonal_count += 1
                                    debug_2 += 1
 
@@ -243,12 +243,12 @@ for row in grid:
 
                             if row_index + 3 < len(grid) and column_index - 3 < len(row):
                                if grid[row_index - 3][column_index - 3] == "S":
-                                   print("----------------------")
-                                   print(row)
-                                   print(grid[row_index + 1])
-                                   print(grid[row_index + 2])
-                                   print(grid[row_index + 3])
-                                   print("----------------------")
+                                   #print("----------------------")
+                                   #print(row)
+                                   #print(grid[row_index + 1])
+                                   #print(grid[row_index + 2])
+                                   #print(grid[row_index + 3])
+                                   #print("----------------------")
                                    diagonal_count += 1
                                    debug_3 += 1
 
