@@ -256,6 +256,11 @@ for row in grid:
 
     row_index += 1
 
+## DEBUGGING
+
+debug_grid = [["0" for i in range(len(no_new_lines[0]))] for j in range(len(no_new_lines))]
+
+
 
 # Diaganol Time left, upwards
 debug_4 = 0
@@ -291,6 +296,12 @@ for row in grid:
                                    diagonal_count += 1
                                    debug_4 += 1
 
+                                   debug_grid[row_index][column_index] = "S"
+                                   debug_grid[row_index + 1][column_index - 1] = "A"
+                                   debug_grid[row_index + 2][column_index - 2] = "M"
+                                   debug_grid[row_index + 3][column_index - 3] = "X"
+                                   print(f"DEBUGGING: Row: {row_index + 3}  |   Column: {column_index - 3}  |   {grid[row_index + 3][column_index - 3]}")
+                 
         column_index += 1
 
     row_index += 1
@@ -310,3 +321,6 @@ print(f"DEBUG_1: {debug_1}")
 print(f"DEBUG_2: {debug_2}")
 print(f"DEBUG_3: {debug_3}")
 print(f"DEBUG_4: {debug_4}") ## ISSUE IS WITH THE FINAL FUNCTION | LEFT-UPWARDS
+
+for row in debug_grid:
+    print(row)
