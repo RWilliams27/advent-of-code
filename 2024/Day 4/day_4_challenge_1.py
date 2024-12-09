@@ -266,14 +266,14 @@ for row in grid:
         if i == "S":
             
             if row_index + 1 < len(grid) and column_index - 1 < len(row):
-                if grid[row_index - 1][column_index - 1] == "A":
+                if grid[row_index + 1][column_index - 1] == "A":
                     #print("----------------------")
                     #print(row)
                     #print(grid[row_index - 1])
                     #print("----------------------")
 
                     if row_index + 2 < len(grid) and column_index - 2 < len(row):
-                        if grid[row_index - 2][column_index - 2] == "M":
+                        if grid[row_index + 2][column_index - 2] == "M":
                             #print("----------------------")
                             #print(row)
                             #print(grid[row_index - 1])
@@ -281,12 +281,12 @@ for row in grid:
                             #print("----------------------")
 
                             if row_index + 3 < len(grid) and column_index - 3 < len(row):
-                               if grid[row_index - 3][column_index - 3] == "X":
+                               if grid[row_index + 3][column_index - 3] == "X":
                                    print("----------------------")
-                                   print(row)
-                                   print(grid[row_index + 1])
-                                   print(grid[row_index + 2])
-                                   print(grid[row_index + 3])
+                                   print(f"ROW INDEX: {row_index}   |   {row}")
+                                   print(f"ROW INDEX: {row_index + 1}   |   {grid[row_index + 1]}")
+                                   print(f"ROW INDEX: {row_index + 2}   |   {grid[row_index + 2]}")
+                                   print(f"ROW INDEX: {row_index + 3}   |   {grid[row_index + 3]}")
                                    print("----------------------")
                                    diagonal_count += 1
                                    debug_4 += 1
