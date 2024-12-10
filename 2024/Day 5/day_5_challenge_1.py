@@ -1,7 +1,18 @@
 from day_5_input_data import input_data
-from collections import defaultdict
+import logging
 
 ## Challenge URL: https://adventofcode.com/2024/day/5
+
+logging.basicConfig(
+    filename="Day_5_Challenge_1.log",
+    encoding="utf-8",
+    filemode="a",
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    style="%",
+    datefmt="%Y-%m-%dT%H:%M",
+    level=logging.DEBUG,
+)
+
 
 ######################################################
 
@@ -73,7 +84,7 @@ for page in string_pages:
 
 parsed_dict = {}
 
-print(pages)
+logging.debug(pages)
 
 def dict_maker(input):
     
@@ -86,20 +97,20 @@ def dict_maker(input):
 
 
 dict_maker(pages)
-print(parsed_dict)
+logging.debug(f"Parsed Dict: {parsed_dict}")
 
 
 temp_dict = {}
 
 for key, value in parsed_dict.items():
-    print(f"Key: {key}, Value: {value}")
+    logging.debug(f"Key: {key}, Value: {value}")
     for number in value:
         if number not in parsed_dict.keys():
             temp_dict[number] = []
 
 parsed_dict.update(temp_dict)
 
-print(parsed_dict)
+logging.debug(parsed_dict)
 
 def kahn(nodes: dict):
     # Heavily relied on source from https://dev.to/leopfeiffer/topological-sort-with-kahns-algorithm-3dl1
@@ -117,6 +128,8 @@ def kahn(nodes: dict):
 
     topological_order = []
 
+    logging.debug(f"InDegrees: {indegrees}")
+
     while len(queue) > 0:
         current_node = queue.pop(0)
 
@@ -127,14 +140,15 @@ def kahn(nodes: dict):
 
             if indegrees[edge] == 0:
                 queue.append(edge)
-                print(f"queue: {queue}")
+                logging.debug(f"queue: {queue}")
 
     if len(topological_order) != len(nodes):
-        print("Circular Path Found")
+        logging.debug("Circular Path Found")
 
     return topological_order
 
 str_template = kahn(parsed_dict)
+logging.debug(f"String Template: {str_template}")
 
 template = []
 for str in str_template:
@@ -148,39 +162,41 @@ def compare(template: list, input_array:list):
         try:
             if check == None:
                 check = template.index(i)
-                print(f"Value: {i}")
-                print(f"Index: {check}")
+                logging.debug(f"Value: {i}")
+                logging.debug(f"Index: {check}")
             else:
                 check = template.index(i, check +1)
 
         except ValueError as e:
-            print(f"Error: {e}")
+            logging.debug(f"Error: {e}")
             
             try:
                 template.index(i)
                 hit = True 
                 break
             except ValueError as e:
-                print(f"Error: {e}")         
+                logging.debug(f"Error: {e}") 
+                pass        
             
     return hit
 
 valid_updates = []
 invalid_updates = []
 for update in updates:
-    print(f"Update: {update}")
+    logging.debug(f"Template: {template}")
+    logging.debug(f"Update: {update}")
     if compare(template, update):
         invalid_updates.append(update)
-        print("Compare: INVALID")
+        logging.debug("Compare: INVALID")
     else:
         valid_updates.append(update)
-        print("Compare: VALID")
+        logging.debug("Compare: VALID")
 
-for update in valid_updates:
-    print(f"Valid: {update}")
-    
+#for update in valid_updates:
+#    logging.debug(f"Valid: {update}")
+#    
 for update in invalid_updates:
-    print(f"Invalid: {update}")
+    logging.debug(f"Invalid: {update}")
 
 middle_array = []
 
@@ -192,4 +208,4 @@ final_count = 0
 for number in middle_array:
     final_count += number
 
-print(f"Final Count: {final_count}")
+logging.debug(f"Final Count: {final_count}")
