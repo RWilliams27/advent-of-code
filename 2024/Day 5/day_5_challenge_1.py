@@ -124,8 +124,6 @@ def kahn(nodes: dict):
         if indegrees[node] == 0:
             queue.append(node)
 
-    print(f"queue: {queue}")
-
     topological_order = []
 
     while len(queue) > 0:
@@ -138,10 +136,38 @@ def kahn(nodes: dict):
 
             if indegrees[edge] == 0:
                 queue.append(edge)
+                print(f"queue: {queue}")
 
     if len(topological_order) != len(nodes):
         print("Circular Path Found")
 
     return topological_order
 
-print(kahn(parsed_dict))
+str_template = kahn(parsed_dict)
+
+template = []
+for str in str_template:
+    template.append(int(str))
+
+
+
+example_input = [75,69,12,1,3]
+
+
+for i in example_input:
+    try:
+        check = template.index(i)
+        print(check)
+    except ValueError as e:
+        print(f"Error: {e}")
+
+
+
+
+
+
+#try:
+#    x = a_list.index(2)
+#except ValueError as e:
+#    print("SJNAD")
+#    print(f"Error: {e}")
