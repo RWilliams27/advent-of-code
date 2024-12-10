@@ -1,3 +1,5 @@
+#More Testing
+
 from day_4_input_data import input_data
 
 ## Challenge URL: https://adventofcode.com/2024/day/4
@@ -68,259 +70,83 @@ for row in grid:
 
 # Look for x's
 
-#Downwards
-downwards_count = 0
-row_index = 0
-for row in grid:
-    column_index = 0
-    for i in row:
-        if i == "X":
-            
-            if row_index + 1 < len(grid):
-                if grid[row_index + 1][column_index] == "M":
-                    #print("----------------------")
-                    #print(row)
-                    #print(grid[row_index + 1])
-                    #print("----------------------")
+schema_dict = {
+    "vertical": {
+        "upwards":[0, 0, 0, 0],
+        "downwards": [0, 0, 0, 0]
+        },
+    "diagonal": {
+        "left": [0, -1, -2, -3],
+        "right": [0, 1, 2, 3]
+    },
+    "letters": {
+        "normal": ["X", "M", "A", "S"],
+        "reverse": ["S", "A", "M", "X"]
+    }
+}
 
-                    if row_index + 2 < len(grid):
-                        if grid[row_index + 2][column_index] == "A":
-                            #print("----------------------")
-                            #print(row)
-                            #print(grid[row_index + 1])
-                            #print(grid[row_index + 2])
-                            #print("----------------------")
+def wordsearch(direction, letter_order): # Will also need to add the dict I want appended to 
+    wordCount = 0
+    row_index = 0
+    for row in grid:
+        column_index = 0
+        for i in row:
+            if i == letter_order[0]:
 
-                            if row_index + 3 < len(grid):
-                               if grid[row_index + 3][column_index] == "S":
-                                   #print("----------------------")
-                                   #print(row)
-                                   #print(grid[row_index + 1])
-                                   #print(grid[row_index + 2])
-                                   #print(grid[row_index + 3])
-                                   #print("----------------------")
-                                   downwards_count += 1
+                if row_index + 1 < len(grid) and column_index + direction[1] < len(row) and column_index + direction[1] >= 0:
+                    if grid[row_index + 1][column_index + direction[1]] == letter_order[1]:
 
-        column_index += 1
+                        if row_index + 2 < len(grid) and column_index + direction[2] < len(row) and column_index + direction[2] >= 0:
+                            if grid[row_index + 2][column_index + direction[2]] == letter_order[2]:
 
-    row_index += 1
-        
-#Upwards
-upwards_count = 0
-row_index = 0
-for row in grid:
-    column_index = 0
-    for i in row:
-        if i == "S":           
-            if row_index + 1 < len(grid):
-                if grid[row_index + 1][column_index] == "A":
-                    #print("----------------------")
-                    #print(row)
-                    #print(grid[row_index + 1])
-                    #print("----------------------")
+                                if row_index + 3 < len(grid) and column_index + direction[3] < len(row) and column_index + direction[3] >= 0:
+                                    if grid[row_index + 3][column_index + direction[3]] == letter_order[3]:
+                                        print("----------------------")
+                                        print(f"ROW INDEX: {row_index}   |   {row}")
+                                        print(f"ROW INDEX: {row_index + 1}   |   {grid[row_index + 1]}")
+                                        print(f"ROW INDEX: {row_index + 2}   |   {grid[row_index + 2]}")
+                                        print(f"ROW INDEX: {row_index + 3}   |   {grid[row_index + 3]}")
+                                        print("----------------------")  
+                                        wordCount += 1
 
-                    if row_index + 2 < len(grid):
-                        if grid[row_index + 2][column_index] == "M":
-                            #print("----------------------")
-                            #print(row)
-                            #print(grid[row_index + 1])
-                            #print(grid[row_index + 2])
-                            #print("----------------------")
+            column_index += 1
 
-                            if row_index + 3 < len(grid):
-                               if grid[row_index + 3][column_index] == "X":
-                                   #print("----------------------")
-                                   #print(row)
-                                   #print(grid[row_index + 1])
-                                   #print(grid[row_index + 2])
-                                   #print(grid[row_index + 3])
-                                   #print("----------------------")
-                                   upwards_count += 1
-        column_index += 1
+        row_index += 1
+    
+    return wordCount
 
-    row_index += 1
+def test(direction, letter_order):
+    print(f"Direction: {direction}")
+    print(f"Letter Order: {letter_order}")
+    print(f"Direction 2: {direction[1]}")
 
-debug_1 = 0
-
-# Diaganol Time right, downwards
-diagonal_count = 0
-row_index = 0
-for row in grid:
-    column_index = 0
-    for i in row:
-        if i == "X":
-            
-            if row_index + 1 < len(grid) and column_index + 1 < len(row):
-                if grid[row_index + 1][column_index + 1] == "M":
-                    #print("----------------------")
-                    #print(row)
-                    #print(grid[row_index + 1])
-                    #print("----------------------")
-
-                    if row_index + 2 < len(grid) and column_index + 2 < len(row):
-                        if grid[row_index + 2][column_index + 2] == "A":
-                            #print("----------------------")
-                            #print(row)
-                            #print(grid[row_index + 1])
-                            #print(grid[row_index + 2])
-                            #print("----------------------")
-
-                            if row_index + 3 < len(grid) and column_index + 3 < len(row):
-                               if grid[row_index + 3][column_index + 3] == "S":
-                                   #print("----------------------")
-                                   #print(row)
-                                   #print(grid[row_index + 1])
-                                   #print(grid[row_index + 2])
-                                   #print(grid[row_index + 3])
-                                   #print("----------------------")
-                                   diagonal_count += 1
-                                   debug_1 += 1
-
-        column_index += 1
-
-    row_index += 1
-
-# Diaganol Time right, upwards
-debug_2 = 0
-row_index = 0
-for row in grid:
-    column_index = 0
-    for i in row:
-        if i == "S":
-            
-            if row_index + 1 < len(grid) and column_index + 1 < len(row):
-                if grid[row_index + 1][column_index + 1] == "A":
-                    #print("----------------------")
-                    #print(row)
-                    #print(grid[row_index + 1])
-                    #print("----------------------")
-
-                    if row_index + 2 < len(grid) and column_index + 2 < len(row):
-                        if grid[row_index + 2][column_index + 2] == "M":
-                            #print("----------------------")
-                            #print(row)
-                            #print(grid[row_index + 1])
-                            #print(grid[row_index + 2])
-                            #print("----------------------")
-
-                            if row_index + 3 < len(grid) and column_index + 3 < len(row):
-                               if grid[row_index + 3][column_index + 3] == "X":
-                                   #print("----------------------")
-                                   #print(row)
-                                   #print(grid[row_index + 1])
-                                   #print(grid[row_index + 2])
-                                   #print(grid[row_index + 3])
-                                   #print("----------------------")
-                                   diagonal_count += 1
-                                   debug_2 += 1
-
-        column_index += 1
-
-    row_index += 1
-
-# Diaganol Time left, downwards
-debug_3 = 0
-row_index = 0
-for row in grid:
-    column_index = 0
-    for i in row:
-        if i == "X":
-            
-            if row_index + 1 < len(grid) and column_index - 1 < len(row):
-                if grid[row_index + 1][column_index - 1] == "M":
-                    #print("----------------------")
-                    #print(row)
-                    #print(grid[row_index - 1])
-                    #print("----------------------")
-
-                    if row_index + 2 < len(grid) and column_index - 2 < len(row):
-                        if grid[row_index + 2][column_index - 2] == "A":
-                            #print("----------------------")
-                            #print(row)
-                            #print(grid[row_index - 1])
-                            #print(grid[row_index - 2])
-                            #print("----------------------")
-
-                            if row_index + 3 < len(grid) and column_index - 3 < len(row):
-                               if grid[row_index + 3][column_index - 3] == "S":
-                                   #print("----------------------")
-                                   #print(row)
-                                   #print(grid[row_index + 1])
-                                   #print(grid[row_index + 2])
-                                   #print(grid[row_index + 3])
-                                   #print("----------------------")
-                                   diagonal_count += 1
-                                   debug_3 += 1
-
-        column_index += 1
-
-    row_index += 1
-
-## DEBUGGING
-
-debug_grid = [["0" for i in range(len(no_new_lines[0]))] for j in range(len(no_new_lines))]
+    print(f"Maths: {5 + direction[1]}")
 
 
 
-# Diaganol Time left, upwards
-debug_4 = 0
-row_index = 0
-for row in grid:
-    column_index = 0
-    for i in row:
-        if i == "S":
-            
-            if row_index + 1 < len(grid) and column_index - 1 < len(row) and column_index - 1>= 0:
-                if grid[row_index + 1][column_index - 1] == "A":
-                    #print("----------------------")
-                    #print(row)
-                    #print(grid[row_index - 1])
-                    #print("----------------------")
+downwards_count = wordsearch(schema_dict["vertical"]["downwards"], schema_dict["letters"]["normal"])
+upwards_count = wordsearch(schema_dict["vertical"]["upwards"], schema_dict["letters"]["reverse"])
 
-                    if row_index + 2 < len(grid) and column_index - 2 < len(row) and column_index - 2 >= 0:
-                        if grid[row_index + 2][column_index - 2] == "M":
-                            #print("----------------------")
-                            #print(row)
-                            #print(grid[row_index - 1])
-                            #print(grid[row_index - 2])
-                            #print("----------------------")
+diagonal_left = 0
+diagonal_right = 0
+diagonal_left += wordsearch(schema_dict["diagonal"]["left"], schema_dict["letters"]["normal"])
+diagonal_left += wordsearch(schema_dict["diagonal"]["left"], schema_dict["letters"]["reverse"])
 
-                            if row_index + 3 < len(grid) and column_index - 3 < len(row) and column_index - 3 >= 0:
-                               if grid[row_index + 3][column_index - 3] == "X":
-                                   print("----------------------")
-                                   print(f"ROW INDEX: {row_index}   |   {row}")
-                                   print(f"ROW INDEX: {row_index + 1}   |   {grid[row_index + 1]}")
-                                   print(f"ROW INDEX: {row_index + 2}   |   {grid[row_index + 2]}")
-                                   print(f"ROW INDEX: {row_index + 3}   |   {grid[row_index + 3]}")
-                                   print("----------------------")
-                                   diagonal_count += 1
-                                   debug_4 += 1
+diagonal_right += wordsearch(schema_dict["diagonal"]["right"], schema_dict["letters"]["normal"])
+diagonal_right += wordsearch(schema_dict["diagonal"]["right"], schema_dict["letters"]["reverse"])
 
-                                   debug_grid[row_index][column_index] = "S"
-                                   debug_grid[row_index + 1][column_index - 1] = "A"
-                                   debug_grid[row_index + 2][column_index - 2] = "M"
-                                   debug_grid[row_index + 3][column_index - 3] = "X"
-                                   print(f"DEBUGGING: Row: {row_index + 3}  |   Column: {column_index - 3}  |   {grid[row_index + 3][column_index - 3]}")
-                 
-        column_index += 1
-
-    row_index += 1
-
+#test(schema_dict["diagonal"]["left"], schema_dict["letters"]["normal"])
 
 
 print(f"horizontal_count: {horizontal_count}") # Correct for example
 print(f"backwards_count: {backwards_count}") # Correct for example
 print(f"upwards_count: {upwards_count}")    # Correct for example
 print(f"downwards_count: {downwards_count}") # Correct for example
-print(f"diagonal_count: {diagonal_count}  |   Expected number: 10")
+#print(f"diagonal_count: {diagonal_count}  |   Expected number: 10")
+print(f"diagonal_left: {diagonal_left}") 
+print(f"diagonal_right: {diagonal_right}") 
 
-print(f"Final Count: {horizontal_count + backwards_count + upwards_count + downwards_count + diagonal_count}")
+print(f"Final Count: {horizontal_count + backwards_count + upwards_count + downwards_count + diagonal_left + diagonal_right}")
 
-
-print(f"DEBUG_1: {debug_1}")
-print(f"DEBUG_2: {debug_2}")
-print(f"DEBUG_3: {debug_3}")
-print(f"DEBUG_4: {debug_4}") ## ISSUE IS WITH THE FINAL FUNCTION | LEFT-UPWARDS
-
-for row in debug_grid:
-    print(row)
+#for row in debug_grid:
+#    print(row)
