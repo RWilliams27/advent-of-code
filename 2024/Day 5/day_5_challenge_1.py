@@ -71,15 +71,6 @@ for page in string_pages:
 
 ######################################################
 
-## Ideas
-# Build a function to create one big list of all pages in their required order
-# Build a function that will take this big list and then check each update and ensure they are in the appropriate order
-
-## ORRR topological nested dictionary 
-
-# Each number should only be entered once so you can always find the index right?
-# function for big list
-
 parsed_dict = {}
 
 print(pages)
@@ -149,25 +140,56 @@ template = []
 for str in str_template:
     template.append(int(str))
 
+def compare(template: list, input_array:list):
+    check = None
+    for i in input_array:
+        hit = False
 
+        try:
+            if check == None:
+                check = template.index(i)
+                print(f"Value: {i}")
+                print(f"Index: {check}")
+            else:
+                check = template.index(i, check +1)
 
-example_input = [75,69,12,1,3]
+        except ValueError as e:
+            print(f"Error: {e}")
+            
+            try:
+                template.index(i)
+                hit = True 
+                break
+            except ValueError as e:
+                print(f"Error: {e}")         
+            
+    return hit
 
+valid_updates = []
+invalid_updates = []
+for update in updates:
+    print(f"Update: {update}")
+    if compare(template, update):
+        invalid_updates.append(update)
+        print("Compare: INVALID")
+    else:
+        valid_updates.append(update)
+        print("Compare: VALID")
 
-for i in example_input:
-    try:
-        check = template.index(i)
-        print(check)
-    except ValueError as e:
-        print(f"Error: {e}")
+for update in valid_updates:
+    print(f"Valid: {update}")
+    
+for update in invalid_updates:
+    print(f"Invalid: {update}")
 
+middle_array = []
 
+for update in valid_updates:
+    middle = int(len(update) / 2)
+    middle_array.append(update[middle])
 
+final_count = 0
+for number in middle_array:
+    final_count += number
 
-
-
-#try:
-#    x = a_list.index(2)
-#except ValueError as e:
-#    print("SJNAD")
-#    print(f"Error: {e}")
+print(f"Final Count: {final_count}")
