@@ -7,19 +7,6 @@ from day_4_input_data import input_data
 #######################################################
 
 data = input_data.input
-# Example data
-#data = """MMMSXXMASM 
-#MSAMXMSMSA
-#AMXSXMAAMM
-#MSAMASMSMX
-#XMASAMXAMM
-#XXAMMXXAMA
-#SMSMSASXSS
-#SAXAMASAAA
-#MAMMMXMMMM
-#MXMXAXMASX"""
-
-
 
 ## Ideas
 # Maybe it into a nested array with each line being an array to essentially create a grid?
