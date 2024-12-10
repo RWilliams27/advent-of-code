@@ -68,8 +68,6 @@ for row in grid:
     print(f"Row String: {row_str}")
 
 
-# Look for x's
-
 schema_dict = {
     "vertical": {
         "upwards":[0, 0, 0, 0],
@@ -101,12 +99,12 @@ def wordsearch(direction, letter_order): # Will also need to add the dict I want
 
                                 if row_index + 3 < len(grid) and column_index + direction[3] < len(row) and column_index + direction[3] >= 0:
                                     if grid[row_index + 3][column_index + direction[3]] == letter_order[3]:
-                                        print("----------------------")
-                                        print(f"ROW INDEX: {row_index}   |   {row}")
-                                        print(f"ROW INDEX: {row_index + 1}   |   {grid[row_index + 1]}")
-                                        print(f"ROW INDEX: {row_index + 2}   |   {grid[row_index + 2]}")
-                                        print(f"ROW INDEX: {row_index + 3}   |   {grid[row_index + 3]}")
-                                        print("----------------------")  
+                                        #print("----------------------")
+                                        #print(f"ROW INDEX: {row_index}   |   {row}")
+                                        #print(f"ROW INDEX: {row_index + 1}   |   {grid[row_index + 1]}")
+                                        #print(f"ROW INDEX: {row_index + 2}   |   {grid[row_index + 2]}")
+                                        #print(f"ROW INDEX: {row_index + 3}   |   {grid[row_index + 3]}")
+                                        #print("----------------------")  
                                         wordCount += 1
 
             column_index += 1
@@ -114,15 +112,6 @@ def wordsearch(direction, letter_order): # Will also need to add the dict I want
         row_index += 1
     
     return wordCount
-
-def test(direction, letter_order):
-    print(f"Direction: {direction}")
-    print(f"Letter Order: {letter_order}")
-    print(f"Direction 2: {direction[1]}")
-
-    print(f"Maths: {5 + direction[1]}")
-
-
 
 downwards_count = wordsearch(schema_dict["vertical"]["downwards"], schema_dict["letters"]["normal"])
 upwards_count = wordsearch(schema_dict["vertical"]["upwards"], schema_dict["letters"]["reverse"])
@@ -135,14 +124,11 @@ diagonal_left += wordsearch(schema_dict["diagonal"]["left"], schema_dict["letter
 diagonal_right += wordsearch(schema_dict["diagonal"]["right"], schema_dict["letters"]["normal"])
 diagonal_right += wordsearch(schema_dict["diagonal"]["right"], schema_dict["letters"]["reverse"])
 
-#test(schema_dict["diagonal"]["left"], schema_dict["letters"]["normal"])
 
-
-print(f"horizontal_count: {horizontal_count}") # Correct for example
-print(f"backwards_count: {backwards_count}") # Correct for example
-print(f"upwards_count: {upwards_count}")    # Correct for example
-print(f"downwards_count: {downwards_count}") # Correct for example
-#print(f"diagonal_count: {diagonal_count}  |   Expected number: 10")
+print(f"horizontal_count: {horizontal_count}")
+print(f"backwards_count: {backwards_count}") 
+print(f"upwards_count: {upwards_count}")    
+print(f"downwards_count: {downwards_count}") 
 print(f"diagonal_left: {diagonal_left}") 
 print(f"diagonal_right: {diagonal_right}") 
 
