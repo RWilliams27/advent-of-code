@@ -133,6 +133,3 @@ print(f"diagonal_left: {diagonal_left}")
 print(f"diagonal_right: {diagonal_right}") 
 
 print(f"Final Count: {horizontal_count + backwards_count + upwards_count + downwards_count + diagonal_left + diagonal_right}")
-
-#for row in debug_grid:
-#    print(row)
