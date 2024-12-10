@@ -109,19 +109,28 @@ def myTop(in_dict):
 
     seen = set()
 
+    other_dict = {}
+
     parent = []
 
     child = []
 
     for item in in_dict:
         parent.append(item)
+        if item not in other_dict:
+            other_dict[item] = 0
+        
+        print(f"Item: {item}")
 
-    for i in parent:
-        for item in in_dict:
-            if item in in_dict[i]:
-                child.append(item)
+        i = 0
+        while i < len(parent):
+            print(i)
+            if parent[i] in in_dict[item]:
+                other_dict[item] += 1
+            i += 1
 
-    return child
+
+    return other_dict
 
 
 order = myTop(test_dict)     
