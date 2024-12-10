@@ -6,16 +6,16 @@ from day_4_input_data import input_data
 
 data = input_data.input
 # Example data
-data = """MMMSXXMASM 
-MSAMXMSMSA
-AMXSXMAAMM
-MSAMASMSMX
-XMASAMXAMM
-XXAMMXXAMA
-SMSMSASXSS
-SAXAMASAAA
-MAMMMXMMMM
-MXMXAXMASX"""
+#data = """MMMSXXMASM 
+#MSAMXMSMSA
+#AMXSXMAAMM
+#MSAMASMSMX
+#XMASAMXAMM
+#XXAMMXXAMA
+#SMSMSASXSS
+#SAXAMASAAA
+#MAMMMXMMMM
+#MXMXAXMASX"""
 
 
 
@@ -227,14 +227,14 @@ for row in grid:
         if i == "X":
             
             if row_index + 1 < len(grid) and column_index - 1 < len(row):
-                if grid[row_index - 1][column_index - 1] == "M":
+                if grid[row_index + 1][column_index - 1] == "M":
                     #print("----------------------")
                     #print(row)
                     #print(grid[row_index - 1])
                     #print("----------------------")
 
                     if row_index + 2 < len(grid) and column_index - 2 < len(row):
-                        if grid[row_index - 2][column_index - 2] == "A":
+                        if grid[row_index + 2][column_index - 2] == "A":
                             #print("----------------------")
                             #print(row)
                             #print(grid[row_index - 1])
@@ -242,7 +242,7 @@ for row in grid:
                             #print("----------------------")
 
                             if row_index + 3 < len(grid) and column_index - 3 < len(row):
-                               if grid[row_index - 3][column_index - 3] == "S":
+                               if grid[row_index + 3][column_index - 3] == "S":
                                    #print("----------------------")
                                    #print(row)
                                    #print(grid[row_index + 1])
@@ -270,14 +270,14 @@ for row in grid:
     for i in row:
         if i == "S":
             
-            if row_index + 1 < len(grid) and column_index - 1 < len(row):
+            if row_index + 1 < len(grid) and column_index - 1 < len(row) and column_index - 1>= 0:
                 if grid[row_index + 1][column_index - 1] == "A":
                     #print("----------------------")
                     #print(row)
                     #print(grid[row_index - 1])
                     #print("----------------------")
 
-                    if row_index + 2 < len(grid) and column_index - 2 < len(row):
+                    if row_index + 2 < len(grid) and column_index - 2 < len(row) and column_index - 2 >= 0:
                         if grid[row_index + 2][column_index - 2] == "M":
                             #print("----------------------")
                             #print(row)
@@ -285,7 +285,7 @@ for row in grid:
                             #print(grid[row_index - 2])
                             #print("----------------------")
 
-                            if row_index + 3 < len(grid) and column_index - 3 < len(row):
+                            if row_index + 3 < len(grid) and column_index - 3 < len(row) and column_index - 3 >= 0:
                                if grid[row_index + 3][column_index - 3] == "X":
                                    print("----------------------")
                                    print(f"ROW INDEX: {row_index}   |   {row}")
