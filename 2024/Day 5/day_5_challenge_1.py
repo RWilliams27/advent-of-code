@@ -79,66 +79,69 @@ for page in string_pages:
 
 # Each number should only be entered once so you can always find the index right?
 # function for big list
-def list_sorter(input):
-    final_list = []
 
-    for i in input:
-        pass
-
-a_list = []
-
-test_dict = {}
+parsed_dict = {}
 
 print(pages)
 
 def dict_maker(input):
     
     for i in input:
-        print(f"DEBUG: {i}")
-        if i[0] not in test_dict:
-            test_dict[i[0]] = []
+        if i[0] not in parsed_dict:
+            parsed_dict[i[0]] = []
 
-        test_dict[i[0]].append(i[1])
+        parsed_dict[i[0]].append(i[1])
 
-        print(i)
+
 
 dict_maker(pages)
+print(parsed_dict)
 
 
-def myTop(in_dict):
+temp_dict = {}
 
-    seen = set()
+for key, value in parsed_dict.items():
+    print(f"Key: {key}, Value: {value}")
+    for number in value:
+        if number not in parsed_dict.keys():
+            temp_dict[number] = []
 
-    other_dict = {}
+parsed_dict.update(temp_dict)
 
-    parent = []
+print(parsed_dict)
 
-    child = []
+def kahn(nodes: dict):
+    # Heavily relied on source from https://dev.to/leopfeiffer/topological-sort-with-kahns-algorithm-3dl1
+    queue = []
+    indegrees = {k: 0 for k in nodes.keys()}
 
-    for item in in_dict:
-        parent.append(item)
-        if item not in other_dict:
-            other_dict[item] = 0
-        
-        print(f"Item: {item}")
+    # Calculate the indegree for each node
+    for name, edges in nodes.items():
+        for edge in edges:
+            indegrees[edge] += 1
 
-        i = 0
-        while i < len(parent):
-            print(i)
-            if parent[i] in in_dict[item]:
-                other_dict[item] += 1
-            i += 1
+    for node in nodes.keys():
+        if indegrees[node] == 0:
+            queue.append(node)
 
+    print(f"queue: {queue}")
 
-    return other_dict
+    topological_order = []
 
+    while len(queue) > 0:
+        current_node = queue.pop(0)
 
-order = myTop(test_dict)     
-print(f"Dictionary: {test_dict}")
-print(f"Order: {order}")
+        topological_order.append(current_node)
 
+        for edge in nodes[current_node]:
+            indegrees[edge] -= 1
 
-#try:
-#    x = a_list.index(2)
-#except ValueError:
-#    print("SJNAD")
+            if indegrees[edge] == 0:
+                queue.append(edge)
+
+    if len(topological_order) != len(nodes):
+        print("Circular Path Found")
+
+    return topological_order
+
+print(kahn(parsed_dict))
