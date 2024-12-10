@@ -1,5 +1,3 @@
-#More Testing
-
 from day_4_input_data import input_data
 
 ## Challenge URL: https://adventofcode.com/2024/day/4#part2
