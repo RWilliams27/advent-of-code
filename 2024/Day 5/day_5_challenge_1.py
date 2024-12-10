@@ -1,4 +1,5 @@
 from day_5_input_data import input_data
+from collections import defaultdict
 
 ## Challenge URL: https://adventofcode.com/2024/day/5
 
@@ -63,15 +64,18 @@ for page in string_pages:
     temp_list_str = page.split("|")
 
     for i in temp_list_str:
-        temp_list.append(int(i))
+        #temp_list.append(int(i))
+        temp_list.append(i)
 
     pages.append(temp_list)
-    
+
 ######################################################
 
 ## Ideas
 # Build a function to create one big list of all pages in their required order
 # Build a function that will take this big list and then check each update and ensure they are in the appropriate order
+
+## ORRR topological nested dictionary 
 
 # Each number should only be entered once so you can always find the index right?
 # function for big list
@@ -81,6 +85,51 @@ def list_sorter(input):
     for i in input:
         pass
 
-#for page in pages:
-#    print(page)
+a_list = []
 
+test_dict = {}
+
+print(pages)
+
+def dict_maker(input):
+    
+    for i in input:
+        print(f"DEBUG: {i}")
+        if i[0] not in test_dict:
+            test_dict[i[0]] = []
+
+        test_dict[i[0]].append(i[1])
+
+        print(i)
+
+dict_maker(pages)
+
+
+def myTop(in_dict):
+
+    seen = set()
+
+    parent = []
+
+    child = []
+
+    for item in in_dict:
+        parent.append(item)
+
+    for i in parent:
+        for item in in_dict:
+            if item in in_dict[i]:
+                child.append(item)
+
+    return child
+
+
+order = myTop(test_dict)     
+print(f"Dictionary: {test_dict}")
+print(f"Order: {order}")
+
+
+#try:
+#    x = a_list.index(2)
+#except ValueError:
+#    print("SJNAD")
