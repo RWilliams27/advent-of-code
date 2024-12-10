@@ -6,6 +6,17 @@ from day_4_input_data import input_data
 
 data = input_data.input
 
+data = """MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX"""
+
 ## Ideas
 # Maybe it into a nested array with each line being an array to essentially create a grid?
 # What if I check for each kind of xmas individually and then add up the final count? (IE: horizontal, then downwards, then upwards, then backwards, then diagonal)
@@ -98,6 +109,94 @@ def wordsearch(direction, letter_order): # Will also need to add the dict I want
     
     return wordCount
 
+
+## Ideas
+# Look for "A"'s and then check the diagonal figures for the "S"'s and "M"'s
+# Nest the ifs 
+
+## Angles
+# Top-Left
+# Bottom-Left
+# Top-Right
+# Bottom-Right
+
+debug_grid = [[":" for i in range(len(no_new_lines[0]))] for j in range(len(no_new_lines))]
+
+def mas_wordsearch():
+    word_count = 0
+    row_index = 0
+
+    for row in grid:
+        column_index = 0
+        for i in row:
+            if i == "A":
+
+                # Top left
+                if row_index - 1 < len(grid) and row_index - 1 >= 0 and column_index - 1 < len(row) and column_index - 1 >= 0:
+                    if grid[row_index - 1][column_index - 1] == "S":
+
+                        # Bottom Right
+                        if row_index + 1 < len(grid) and row_index + 1 >= 0 and column_index + 1 < len(row) and column_index + 1 >= 0:
+                            if grid[row_index + 1][column_index + 1] == "M":
+                                print("FOUND")
+                                word_count += 1
+
+                                debug_grid[row_index][column_index] = "A"
+                                debug_grid[row_index - 1][column_index - 1] = "S"
+                                debug_grid[row_index + 1][column_index + 1] = "M"
+
+
+
+                # Top Right
+                if row_index - 1 < len(grid) and row_index - 1 >= 0 and column_index + 1 < len(row) and column_index + 1 >= 0:
+                    if grid[row_index - 1][column_index + 1] == "S":
+
+                        # Bottom Left
+                        if row_index + 1 < len(grid) and row_index + 1 >= 0 and column_index - 1 < len(row) and column_index - 1 >= 0:
+                            if grid[row_index + 1][column_index - 1] == "M":
+                                print("FOUND 2")
+                                word_count += 1
+
+                                debug_grid[row_index][column_index] = "A"
+                                debug_grid[row_index - 1][column_index + 1] = "S"
+                                debug_grid[row_index + 1][column_index - 1] = "M"
+
+
+                # Bottom Left
+                if row_index + 1 < len(grid) and row_index + 1 >= 0 and column_index - 1 < len(row) and column_index - 1 >= 0:
+                    if grid[row_index + 1][column_index - 1] == "S":
+
+                        # Top Right
+                        if row_index - 1 < len(grid) and row_index - 1 >= 0 and column_index + 1 < len(row) and column_index + 1 >= 0:
+                            if grid[row_index - 1][column_index + 1] == "M":   
+                                print("FOUND 3")   
+                                word_count += 1        
+
+                                debug_grid[row_index][column_index] = "A"
+                                debug_grid[row_index + 1][column_index - 1] = "S"
+                                debug_grid[row_index - 1][column_index + 1] = "M"      
+
+
+                # Bottom Right
+                if row_index + 1 < len(grid) and row_index + 1 >= 0 and column_index + 1 < len(row) and column_index + 1 >= 0:
+                    if grid[row_index + 1][column_index + 1] == "S":
+
+                        # Top Left
+                        if row_index - 1 < len(grid) and row_index - 1 >= 0 and column_index - 1 < len(row) and column_index - 1 >= 0:
+                            if grid[row_index - 1][column_index - 1] == "S":
+                                print("FOUND 4")
+                                word_count += 1
+
+                                debug_grid[row_index][column_index] = "A"
+                                debug_grid[row_index + 1][column_index + 1] = "S"
+                                debug_grid[row_index - 1][column_index - 1] = "M"
+
+            column_index += 1
+
+        row_index += 1
+
+    return word_count
+
 downwards_count = wordsearch(schema_dict["vertical"]["downwards"], schema_dict["letters"]["normal"])
 upwards_count = wordsearch(schema_dict["vertical"]["upwards"], schema_dict["letters"]["reverse"])
 
@@ -118,3 +217,15 @@ print(f"diagonal_left: {diagonal_left}")
 print(f"diagonal_right: {diagonal_right}") 
 
 print(f"Final Count: {horizontal_count + backwards_count + upwards_count + downwards_count + diagonal_left + diagonal_right}")
+
+words = mas_wordsearch()
+
+print(f"Word Count: {words}")
+
+
+print("------------------- DEBUG GRID -------------------")
+
+for row in debug_grid:
+    print(row)
+
+print("------------------- DEBUG GRID -------------------")
