@@ -122,7 +122,7 @@ def wordsearch(direction, letter_order): # Will also need to add the dict I want
 
 debug_grid = [[":" for i in range(len(no_new_lines[0]))] for j in range(len(no_new_lines))]
 
-def mas_wordsearch():
+def og_mas_wordsearch():
     word_count = 0
     row_index = 0
 
@@ -197,6 +197,91 @@ def mas_wordsearch():
 
     return word_count
 
+def gridCheck(direction, letter, row_index, column_index):
+
+    if direction == "Top-Left":
+        if row_index - 1 < len(grid) and row_index - 1 >= 0 and column_index - 1 < len(row) and column_index - 1 >= 0:
+                if grid[row_index - 1][column_index - 1] == letter:
+                    return True
+                    
+    elif direction == "Top-Right":
+        if row_index - 1 < len(grid) and row_index - 1 >= 0 and column_index + 1 < len(row) and column_index + 1 >= 0:
+                if grid[row_index - 1][column_index + 1] == letter:
+                    return True
+                
+    elif direction == "Bottom-Left":
+        if row_index + 1 < len(grid) and row_index + 1 >= 0 and column_index - 1 < len(row) and column_index - 1 >= 0:
+            if grid[row_index + 1][column_index - 1] == letter:
+                return True
+            
+    elif direction == "Bottom-Right":
+        if row_index + 1 < len(grid) and row_index + 1 >= 0 and column_index + 1 < len(row) and column_index + 1 >= 0:
+            if grid[row_index + 1][column_index + 1] == letter:
+                return True
+    
+    else:
+        return False
+
+def mas_wordsearch():
+    word_count = 0
+    row_index = 0
+
+    for row in grid:
+        column_index = 0
+        for i in row:
+            if i == "A":
+
+                # Top left S
+                if gridCheck("Top-Left", "S", row_index, column_index):
+
+                    if gridCheck("Bottom-Right", "M", row_index, column_index):
+
+                        if gridCheck("Top-Right", "S", row_index, column_index):
+
+                            if gridCheck("Bottom-Left", "M", row_index, column_index):
+                                print("FOUND")
+                                word_count += 1
+
+                        elif gridCheck("Top-Right", "M", row_index, column_index):
+
+                            if gridCheck("Bottom-Left", "S", row_index, column_index):
+                                print("FOUND 2")
+                                word_count += 1
+
+                # Top left M
+
+                elif gridCheck("Top-Left", "M", row_index, column_index):
+
+                    if gridCheck("Bottom-Right", "S", row_index, column_index):
+
+                        if gridCheck("Top-Right", "M", row_index, column_index):
+
+                            if gridCheck("Bottom-Left", "S", row_index, column_index):
+                                print("FOUND 3")
+                                word_count += 1
+
+                        elif gridCheck("Top-Right", "S", row_index, column_index):
+
+                            if gridCheck("Bottom-Left", "M", row_index, column_index):
+                                print("FOUND 4")
+                                word_count += 1
+
+
+                
+
+
+            column_index += 1
+
+        row_index += 1
+
+    return word_count
+
+
+## Misunderstood the statement, they must be an X, they cannot be just diagonal
+
+
+
+
 downwards_count = wordsearch(schema_dict["vertical"]["downwards"], schema_dict["letters"]["normal"])
 upwards_count = wordsearch(schema_dict["vertical"]["upwards"], schema_dict["letters"]["reverse"])
 
@@ -223,9 +308,9 @@ words = mas_wordsearch()
 print(f"Word Count: {words}")
 
 
-print("------------------- DEBUG GRID -------------------")
-
-for row in debug_grid:
-    print(row)
-
-print("------------------- DEBUG GRID -------------------")
+#print("------------------- DEBUG GRID -------------------")
+#
+#for row in debug_grid:
+#    print(row)
+#
+#print("------------------- DEBUG GRID -------------------")
