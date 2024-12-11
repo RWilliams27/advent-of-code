@@ -1,5 +1,6 @@
 from day_5_input_data import input_data
 import logging
+from collections import deque, defaultdict
 
 ## Challenge URL: https://adventofcode.com/2024/day/5
 
@@ -80,6 +81,9 @@ for page in string_pages:
 
     pages.append(temp_list)
 
+for page in pages:
+    print(page)
+
 ######################################################
 
 parsed_dict = {}
@@ -89,16 +93,20 @@ logging.debug(pages)
 def dict_maker(input):
     
     for i in input:
-        if i[0] not in parsed_dict:
+        if i[0] not in parsed_dict.keys():
             parsed_dict[i[0]] = []
-
         parsed_dict[i[0]].append(i[1])
 
+        #if i[1] not in parsed_dict.keys(): # Do I want this?
+        #    parsed_dict[i[1]] = []
 
+        logging.debug(f"Input: {i}")
+        logging.debug(f"Parsed Dict per step: {parsed_dict}")
 
 dict_maker(pages)
 logging.debug(f"Parsed Dict: {parsed_dict}")
 
+#logging.debug(f"Thirteen and Sixty Six: {parsed_dict["13"]}   |   {parsed_dict["66"]}")
 
 temp_dict = {}
 
@@ -109,6 +117,7 @@ for key, value in parsed_dict.items():
             temp_dict[number] = []
 
 parsed_dict.update(temp_dict)
+logging.debug(f"TEMP DICT: {temp_dict}")
 
 logging.debug(parsed_dict)
 
@@ -147,7 +156,36 @@ def kahn(nodes: dict):
 
     return topological_order
 
-str_template = kahn(parsed_dict)
+
+order = []
+
+def dfs_topological_sort(graph):
+    # Helper function to perform DFS
+    def dfs(node, graph, visited, stack):
+        # Mark the node as visited
+        visited[node] = True
+        
+        # Visit all the neighbors of the node
+        for neighbor in graph.get(node, []):
+            if not visited[neighbor]:
+                dfs(neighbor, graph, visited, stack)
+        
+        # Push the node to the stack after visiting all neighbors
+        stack.append(node)
+
+    visited = {node: False for node in graph}  # Keep track of visited nodes
+    stack = []  # This will store the topologically sorted nodes
+
+    # Perform DFS for each unvisited node
+    for node in graph:
+        if not visited[node]:
+            dfs(node, graph, visited, stack)
+
+    # The stack will contain the nodes in reverse topological order
+    return stack[::-1]
+
+str_template = dfs_topological_sort(parsed_dict)
+logging.debug(f"STRING TEMPLATE: {str_template}")
 logging.debug(f"String Template: {str_template}")
 
 template = []
@@ -165,18 +203,23 @@ def compare(template: list, input_array:list):
                 logging.debug(f"Value: {i}")
                 logging.debug(f"Index: {check}")
             else:
-                check = template.index(i, check +1)
+                check = template.index(i, check)
+                logging.debug(f"Value: {i}")
+                logging.debug(f"Index: {check}")
 
         except ValueError as e:
-            logging.debug(f"Error: {e}")
+            logging.debug(f"Error A: {e}")
             
             try:
-                template.index(i)
+                logging.debug("WE HERE")
+                testing = template.index(i)
+                logging.debug(f"Index 2 |   {testing}")
                 hit = True 
                 break
             except ValueError as e:
-                logging.debug(f"Error: {e}") 
-                pass        
+                logging.debug("WE NEVER GET HERE")
+                logging.debug(f"Error B: {e}") 
+                #pass        
             
     return hit
 
@@ -209,3 +252,44 @@ for number in middle_array:
     final_count += number
 
 logging.debug(f"Final Count: {final_count}")
+
+
+
+
+
+
+def chat_kahn(graph):
+    # Step 1: Compute in-degree for each node
+    in_degree = defaultdict(int)
+    for node in graph:
+        for neighbor in graph[node]:
+            in_degree[neighbor] += 1
+        if node not in in_degree:
+            in_degree[node] = 0
+
+    # Step 2: Initialize the queue with nodes having in-degree 0
+    queue = deque([node for node in in_degree if in_degree[node] == 0])
+
+    topological_order = []
+
+    # Step 3: Process nodes in the queue
+    while queue:
+        node = queue.popleft()
+        topological_order.append(node)
+
+        # For each neighbor, reduce the in-degree
+        for neighbor in graph.get(node, []):
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+
+    # If the topological order contains all nodes, it's a valid sort
+    if len(topological_order) == len(in_degree):
+        logging.debug("Topological Order:", topological_order)
+    else:
+        logging.debug("The graph has a cycle and cannot be topologically sorted.")
+
+
+chat_kahn(parsed_dict)
+logging.debug(order)
+
