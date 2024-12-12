@@ -14,7 +14,7 @@ logging.basicConfig(
     level=logging.DEBUG,
 )
 
-
+start = time.time()
 ######################################################
 
 data = input_data.input
@@ -30,7 +30,7 @@ data = input_data.input
 ##.........
 #......#..."""
 
-logging.debug("")
+#logging.debug("")
 rows = data.split("\n")
 
 # Declares 2d array
@@ -53,12 +53,13 @@ for row_index, row in enumerate(rows):
             grid[row_index][index] = 1
         if item == "^": #Hardcoded to start as up
             grid[row_index][index] = 2
-            logging.debug(directions[current_direction])
+            #logging.debug(directions[current_direction])
 
-logging.debug("----------------------------")
+#logging.debug("----------------------------")
 for row in grid:
-    logging.debug(row)
-logging.debug("----------------------------")
+    #logging.debug(row)
+    pass
+#logging.debug("----------------------------")
 
 def move(move_direction, direction):
     if move_direction + direction >= len(directions):
@@ -66,48 +67,48 @@ def move(move_direction, direction):
         return move_direction
     
     elif direction == 0:
-        logging.debug(f"Move Direction: {move_direction}")
+        #logging.debug(f"Move Direction: {move_direction}")
         return move_direction
     
     elif direction >= 1:
-        logging.debug(f"Move Direction: {move_direction}")
+        #logging.debug(f"Move Direction: {move_direction}")
         return move_direction + 1
 
 def main(curr_dir: int, grid = grid):
     running = True
     previous_grid = grid
     player_row, player_column = directions[curr_dir]
-    logging.debug(f"Current Dir: {directions[curr_dir]}")
+    #logging.debug(f"Current Dir: {directions[curr_dir]}")
             
-    logging.debug("-----------------------------")
-    for row in grid:
-        logging.debug(row)
-    logging.debug("-----------------------------")  
+    #logging.debug("-----------------------------")
+    #for row in grid:
+        #logging.debug(row)
+    #logging.debug("-----------------------------")  
     for row_index, row in enumerate(grid):
         for column_index, item in enumerate(row):
             if item == 2:
                 if row_index + player_row < len(grid) and row_index + player_row >= 0 and column_index + player_column < len(row) and column_index + player_column >= 0: 
                     if grid[row_index + player_row][column_index + player_column] == 1:
-                        logging.debug(f"Player Row: {player_row}    |   Player Column: {player_column}")
+                        #logging.debug(f"Player Row: {player_row}    |   Player Column: {player_column}")
                         curr_dir = move(curr_dir, 1)           
-                        logging.debug("HIT 2")   
+                        #logging.debug("HIT 2")   
                         return curr_dir, grid, running        
                     else: 
-                        logging.debug(f"Player Row: {player_row}    |   Player Column: {player_column}")
+                        #logging.debug(f"Player Row: {player_row}    |   Player Column: {player_column}")
                         previous_grid[row_index][column_index] = 3
                         previous_grid[row_index + player_row][column_index + player_column] = 2
 
-                        logging.debug("HIT 3")
+                        #logging.debug("HIT 3")
                         return curr_dir, grid, running
 
                 else:
-                    logging.debug("HIT 4")
+                    #logging.debug("HIT 4")
                     running = False
                     return curr_dir, grid, running
 
     grid = previous_grid 
 
-    logging.debug(f"Row Index + Player Row: {row_index + player_row}   |   Column Index + Player Column: {column_index + player_column}")  
+    #logging.debug(f"Row Index + Player Row: {row_index + player_row}   |   Column Index + Player Column: {column_index + player_column}")  
     return curr_dir, grid, running
 
 
@@ -118,14 +119,7 @@ def final_path_count(grid: list, final_count: int):
                 final_count += 1
     
     return final_count
-
-
-
-
-
-
     
-move_count = 0
 running = True
 i = 0
 while running:
@@ -140,6 +134,6 @@ for row in grid:
     logging.debug(row)
 logging.debug("----------------------------")
 
-logging.debug(f"Move Count: {move_count}")
-
+end = time.time()
+logging.debug(f"Time Taken: {end - start}")
 logging.debug(f"Final Count: {final_count}")
