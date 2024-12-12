@@ -73,7 +73,7 @@ def move(move_direction, direction):
         logging.debug(f"Move Direction: {move_direction}")
         return move_direction + 1
 
-def main(curr_dir: int, moves = int, grid = grid):
+def main(curr_dir: int, grid = grid):
     running = True
     previous_grid = grid
     player_row, player_column = directions[curr_dir]
@@ -91,26 +91,37 @@ def main(curr_dir: int, moves = int, grid = grid):
                         logging.debug(f"Player Row: {player_row}    |   Player Column: {player_column}")
                         curr_dir = move(curr_dir, 1)           
                         logging.debug("HIT 2")   
-                        return curr_dir, grid, running, moves          
+                        return curr_dir, grid, running        
                     else: 
                         logging.debug(f"Player Row: {player_row}    |   Player Column: {player_column}")
                         previous_grid[row_index][column_index] = 3
                         previous_grid[row_index + player_row][column_index + player_column] = 2
 
-                        moves += 1
-                        logging.debug(f"Moves is equal to: {moves}")
                         logging.debug("HIT 3")
-                        return curr_dir, grid, running, moves 
+                        return curr_dir, grid, running
 
                 else:
                     logging.debug("HIT 4")
                     running = False
-                    return curr_dir, grid, running, moves 
+                    return curr_dir, grid, running
 
     grid = previous_grid 
 
     logging.debug(f"Row Index + Player Row: {row_index + player_row}   |   Column Index + Player Column: {column_index + player_column}")  
-    return curr_dir, grid, running, moves 
+    return curr_dir, grid, running
+
+
+def final_path_count(grid: list, final_count: int):
+    for row_index, row in enumerate(grid):
+        for column_index, column in enumerate(row):
+            if grid[row_index][column_index] == 3:
+                final_count += 1
+    
+    return final_count
+
+
+
+
 
 
     
@@ -118,8 +129,11 @@ move_count = 0
 running = True
 i = 0
 while running:
-    current_direction, grid, running, move_count = main(current_direction, move_count)
+    current_direction, grid, running = main(current_direction)
     i += 1
+
+final_count = 1
+final_count = final_path_count(grid, final_count)
 
 logging.debug("----------------------------")
 for row in grid:
@@ -127,3 +141,5 @@ for row in grid:
 logging.debug("----------------------------")
 
 logging.debug(f"Move Count: {move_count}")
+
+logging.debug(f"Final Count: {final_count}")
